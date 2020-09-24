@@ -49,3 +49,5 @@ let sentences = ['ten ate neite ate nee enet ite ate inet ent eate', 'Too ato to
     * Loops are automatic and very fast
     * Think logically about how to move through the sentence array, and through each sentence character-by-character.
         * Let user input/action be the "driving force" of your program.
+
+        test

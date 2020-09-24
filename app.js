@@ -9,7 +9,9 @@ $('body').keydown(function(e) {
     };
 });
 
-  
+     
+  //e.shiftkey
+  //event.shiftkey
   
   
   
