@@ -14,31 +14,25 @@ $(document).ready(function () {
   let sentencePosition = 0;
   let letter = sentences[sentenceIndex][sentencePosition];
   let currentSentence = sentences[0];
-  // let currentLetter = currentSentence.charAt(0);
   let startTime = Date.now();
   let errors = 0;
-  
-
-
-
   let $sentenceDiv = $('#sentence')
+  
   //hide uppercase keyboard on page load
   $('#keyboard-upper-container').hide();
 
   //when shift key is pressed, hide lower, show upper, add highlight
   $(document).keydown(function (e) {
-    // console.log(e)
     if (e.shiftKey == true) {
       $('#keyboard-upper-container').show();
       $('#keyboard-lower-container').hide();
-      // $(`#83`).css('background-color', '#F5F5F5');
     };
     let keynum = e.key.charCodeAt(0);
     $(`#${keynum}`).css('background-color', 'yellow');
 
   });
 
-  //typing functions
+  //typing conditions
   $(document).keypress(function (e) {
     //move to next letter
     startTime;
@@ -85,7 +79,6 @@ $(document).ready(function () {
 
   //game over function calculate typing speed, buttons to play again
   function gameOver() {
-    //number of words / minutes -2 * numberOfMistakes
     alert('game over');
     $('#feedback').empty();
     $('#target-letter').empty();
@@ -96,7 +89,6 @@ $(document).ready(function () {
     $('#resetButton').click(function () {
       location.reload();
     });
-    //54 words in sentence array
     
 
   };
@@ -120,17 +112,6 @@ $(document).ready(function () {
 
   printSentence();
 
-  
-
-
-
-
-
-
-
-  
-
- 
 
   //end of body
 })
