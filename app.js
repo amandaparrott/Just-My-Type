@@ -15,7 +15,9 @@ $(document).ready(function () {
   let letter = sentences[sentenceIndex][sentencePosition];
   let currentSentence = sentences[0];
   // let currentLetter = currentSentence.charAt(0);
-  let startTime = event.timeStamp;
+  let startTime = Date.now();
+  let errors = 0;
+  
 
 
 
@@ -39,22 +41,23 @@ $(document).ready(function () {
   //typing functions
   $(document).keypress(function (e) {
     //move to next letter
+    startTime;
     if (e.key === letter) {
-      startTime;
+
+      console.log(startTime);
       sentencePosition++;
       letter = sentences[sentenceIndex][sentencePosition];
       $('#target-letter').text(letter);
       //move yellow block, letter check
       $('#yellow-block').css('left', '+=17.5');
-      console.log('you type real good');
       $('#feedback').append('<span class="glyphicon glyphicon-ok"></span>');
     } else {
       sentencePosition++;
       letter = sentences[sentenceIndex][sentencePosition];
       $('#target-letter').text(letter);
       $('#yellow-block').css('left', '+=17.5');
-      console.log('you done typed bad');
       $('#feedback').append('<span class="glyphicon glyphicon-remove"></span>');
+      errors++;
     };
 
 
@@ -63,13 +66,9 @@ $(document).ready(function () {
       sentenceIndex++;
       console.log(sentenceIndex);
       // if out of sentences  
-      if (sentenceIndex >= 5) {
-        let endTime = event.timeStamp;
-        endTime; 
-        console.log(endTime);
+      if (sentenceIndex == 5) {
         gameOver();
-
-      };
+      } else {
       currentSentence = sentences[sentenceIndex];
       $('#sentence').empty();
       //move yellow block
@@ -80,7 +79,7 @@ $(document).ready(function () {
       letter = sentences[sentenceIndex][sentencePosition];
       $('#target-letter').text(letter);
       $('#feedback').empty();
-
+      };
 
     };
   });
@@ -90,9 +89,16 @@ $(document).ready(function () {
     //number of words / minutes -2 * numberOfMistakes
     alert('game over');
     $('#feedback').empty();
-    $('#feedback').append('<span>' + 'Score: ' + score + '</span>', '<button id="resetButton">Play Again?</button>');
+    $('#target-letter').empty();
+    let endTime = Date.now();
+    endTime;
+    let score = 54/((endTime - startTime)/(60*1000)) * errors;
+    $('#feedback').append('<span>' + 'Score:' + score + 'wpm' + '</span>', '<button id="resetButton">Play Again?</button>');
+    $('#resetButton').click(function () {
+      location.reload();
+    });
     //54 words in sentence array
-    let score = 54/(startTime - endtime) * (numberOfMistakes);
+    
 
   };
 
@@ -115,9 +121,7 @@ $(document).ready(function () {
 
   printSentence();
 
-  $('#resetButton').click(function () {
-    location.reload();
-  });
+  
 
 
 
