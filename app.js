@@ -15,6 +15,8 @@ $(document).ready(function () {
   let letter = sentences[sentenceIndex][sentencePosition];
   let currentSentence = sentences[0];
   // let currentLetter = currentSentence.charAt(0);
+  let startTime = event.timeStamp;
+
 
 
   let $sentenceDiv = $('#sentence')
@@ -38,6 +40,7 @@ $(document).ready(function () {
   $(document).keypress(function (e) {
     //move to next letter
     if (e.key === letter) {
+      startTime;
       sentencePosition++;
       letter = sentences[sentenceIndex][sentencePosition];
       $('#target-letter').text(letter);
@@ -54,26 +57,44 @@ $(document).ready(function () {
       $('#feedback').append('<span class="glyphicon glyphicon-remove"></span>');
     };
 
-//if out of sentences  NOT WORKING **************************************************************************************
-   
-    if (sentenceIndex === sentences.length) {
-      alert('game over');
-      letter = 0;
-      sentencePosition = 0;
-       //go to next sentence
-    } else if (sentencePosition === currentSentence.length) {
+
+    //go to next sentence
+    if (sentencePosition === currentSentence.length) {
       sentenceIndex++;
+      console.log(sentenceIndex);
+      // if out of sentences  
+      if (sentenceIndex >= 5) {
+        let endTime = event.timeStamp;
+        endTime; 
+        console.log(endTime);
+        gameOver();
+
+      };
       currentSentence = sentences[sentenceIndex];
       $('#sentence').empty();
+      //move yellow block
       $('#yellow-block').css('left', '15px');
+      //reset letter index
       printSentence();
       sentencePosition = 0;
       letter = sentences[sentenceIndex][sentencePosition];
       $('#target-letter').text(letter);
       $('#feedback').empty();
-      
-    }; 
+
+
+    };
   });
+
+  //game over function calculate typing speed, buttons to play again
+  function gameOver() {
+    //number of words / minutes -2 * numberOfMistakes
+    alert('game over');
+    $('#feedback').empty();
+    $('#feedback').append('<span>' + 'Score: ' + score + '</span>', '<button id="resetButton">Play Again?</button>');
+    //54 words in sentence array
+    let score = 54/(startTime - endtime) * (numberOfMistakes);
+
+  };
 
   //when shift key is released, show lower, hide upper, remove highlight
   $(document).keyup(function (e) {
@@ -90,12 +111,13 @@ $(document).ready(function () {
   function printSentence() {
     $sentenceDiv.append((sentences[sentenceIndex]));
     $('#target-letter').text(letter);
-
-
   };
 
   printSentence();
 
+  $('#resetButton').click(function () {
+    location.reload();
+  });
 
 
 
@@ -103,11 +125,9 @@ $(document).ready(function () {
 
 
 
-  //move yellow block based on expected character
+  
 
-  //if keydown = (sentence[sentenceIndex][sentencePosition]), move to next character
-  //yellow box needs to move over 3pxs at a time
-  //do while loop?
+ 
 
   //end of body
 })
