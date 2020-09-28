@@ -43,7 +43,6 @@ $(document).ready(function () {
     //move to next letter
     startTime;
     if (e.key === letter) {
-
       console.log(startTime);
       sentencePosition++;
       letter = sentences[sentenceIndex][sentencePosition];
